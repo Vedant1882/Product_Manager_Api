@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Product_Manager.Interfaces;
 using Product_Manager.Models;
-using Product_Manager.Providers;
 using Product_Manager.ViewModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
-using System.Configuration;
 using System.Security.Claims;
 
 namespace Product_Manager.Controllers
@@ -18,13 +16,15 @@ namespace Product_Manager.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        
+
         IUserServices _userServices;
-        private UserConext _context;
+        UserConext _context;
+
         public UserController(IUserServices userServices, UserConext context)
         {
             _userServices = userServices;
             _context = context;
+
         }
 
         [HttpPost]
@@ -60,12 +60,17 @@ namespace Product_Manager.Controllers
                 {
                     var encryption = new HMACSHA512(user.Key);
                     var password = encryption.ComputeHash(Encoding.UTF8.GetBytes(loginVm.Password));
-                    if (password == user.Password)
+                    var a = user.Password.ToString();
+                    var b = password.ToString();
+                    if (user.Password.SequenceEqual(password))
                     {
-                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationManager.AppSetting["JWT:Secret"]));
+                        var claims = new List<Claim>() { new Claim(ClaimTypes.Name, user.Email),
+                        new Claim(ClaimTypes.NameIdentifier, "1") };
+                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.AppSetting["JWT:Secret"]));
                         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                        var tokeOptions = new JwtSecurityToken(issuer: ConfigurationManager.AppSetting["JWT:ValidIssuer"], audience: ConfigurationManager.AppSetting["JWT:ValidAudience"], claims: new List<Claim>(), expires: DateTime.Now.AddMinutes(6), signingCredentials: signinCredentials);
+                        var tokeOptions = new JwtSecurityToken(issuer: Configuration.AppSetting["JWT:ValidIssuer"], audience: Configuration.AppSetting["JWT:ValidAudience"], claims, expires: DateTime.Now.AddMinutes(6), signingCredentials: signinCredentials);
                         var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                        var xyz = tokenString;
                         return Ok(new TokenGen
                         {
                             Token = tokenString
@@ -73,6 +78,7 @@ namespace Product_Manager.Controllers
 
                     }
                 }
+                return BadRequest();
             }
             return Ok();
         }

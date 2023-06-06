@@ -3,12 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Product_Manager.Models
 {
-    public class Cost
+    public class Category :AuditFields
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public int Price { get; set; }
+        public int Id
+        {
+            get;
+            set;
+        }
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
     }
 }
+    

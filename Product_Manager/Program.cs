@@ -17,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<ICategoryService, CategoryServices>();
 builder.Services.AddDbContext<UserConext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
 builder.Services.AddAuthentication(opt =>
 {

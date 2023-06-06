@@ -10,7 +10,12 @@ namespace Product_Manager.Models
             get;
             set;
         }
-        public DbSet<Cost> Cost
+        public DbSet<Category> Categories
+        {
+            get;
+            set;
+        }
+        public DbSet<Product> Products
         {
             get;
             set;

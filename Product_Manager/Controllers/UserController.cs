@@ -41,6 +41,7 @@ namespace Product_Manager.Controllers
         [Route("api/user/get")]
         public async Task<List<AppUsers>> GetAppUsersList()
         {
+            var header = HttpContext.Request.Headers;
             return await _userServices.GetUsers();
         }
         [HttpGet]

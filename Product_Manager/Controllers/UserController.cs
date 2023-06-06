@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Product_Manager.Controllers
 {
@@ -34,6 +36,7 @@ namespace Product_Manager.Controllers
             return await _userServices.SaveUser(UsersViewModel);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         [Route("api/user/get")]
         public async Task<List<AppUsers>> GetAppUsersList()
@@ -77,8 +80,19 @@ namespace Product_Manager.Controllers
                         });
 
                     }
+                    else
+                    {
+                        return Ok(new TokenGen
+                        {
+                            Token = "",
+                        }) ;
+                    }
                 }
-                return BadRequest();
+                else
+                {
+
+                    return BadRequest();
+                }
             }
             return Ok();
         }

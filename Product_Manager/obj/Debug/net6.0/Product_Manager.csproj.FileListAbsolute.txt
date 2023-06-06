@@ -164,3 +164,5 @@ D:\Projects\Product_Manager_Api\Product_Manager\obj\Debug\net6.0\Product_Manager
 D:\Projects\Product_Manager_Api\Product_Manager\obj\Debug\net6.0\ref\Product_Manager.dll
 D:\Projects\Product_Manager_Api\Product_Manager\obj\Debug\net6.0\Product_Manager.pdb
 D:\Projects\Product_Manager_Api\Product_Manager\obj\Debug\net6.0\Product_Manager.genruntimeconfig.cache
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll

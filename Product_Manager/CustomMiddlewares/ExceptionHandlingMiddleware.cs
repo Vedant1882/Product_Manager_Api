@@ -38,6 +38,7 @@ public class ExceptionHandlingMiddleware
         {
             IsSuccess = false,
             Message = exception.Message,
+            InternalExc = exception.InnerException.ToString(),
         };
        
         _logger.LogError(exception.Message);

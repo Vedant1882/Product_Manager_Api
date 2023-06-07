@@ -12,5 +12,6 @@
             get;
             set;
         }
+        public string InternalExc { get; set; }
     }
 }

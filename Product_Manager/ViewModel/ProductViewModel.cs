@@ -1,4 +1,6 @@
-﻿namespace Product_Manager.ViewModel
+﻿using System.Reflection.Metadata;
+
+namespace Product_Manager.ViewModel
 {
     public class ProductViewModel
     {

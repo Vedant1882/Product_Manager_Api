@@ -166,3 +166,10 @@ D:\Projects\Product_Manager_Api\Product_Manager\obj\Debug\net6.0\Product_Manager
 D:\Projects\Product_Manager_Api\Product_Manager\obj\Debug\net6.0\Product_Manager.genruntimeconfig.cache
 D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
 D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.Razor.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll

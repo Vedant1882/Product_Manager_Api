@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Product_Manager.Interfaces;
-using Product_Manager.Models;
 using Product_Manager.ViewModel;
+using System.Net.Http.Headers;
+using System.Web;
+
 
 namespace Product_Manager.Controllers
 {
@@ -12,6 +13,7 @@ namespace Product_Manager.Controllers
         IProductServices _productServices;
         public ProductController(IProductServices productServices)
         {
+            
             _productServices = productServices;
 
         }
@@ -21,9 +23,38 @@ namespace Product_Manager.Controllers
         {
             return await _productServices.SaveProduct(productViewModel);
         }
+        [HttpPost]
+        [Route("api/product/saveImages")]
+        public async Task<ResponseModel> saveImage()
+        {
+            ResponseModel model=new ResponseModel();
+            var file = Request.Form.Files[0];
+            var folderName = Path.Combine("Images");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            if (file.Length > 0)
+            {
+                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                var fullPath = Path.Combine(pathToSave, fileName);
+                var dbPath = Path.Combine(folderName, fileName);
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                    model.IsSuccess = true;
+                    model.Message = "file saved";
+                }
+                return model;
+            }
+            else
+            {
+                model.IsSuccess = false;
+                model.Message = "file can't saved";
+                return model;
+            }
+            return null;
+        }
         [HttpGet]
         [Route("api/product/getproduct")]
-        public async Task<List<ProductViewModel>> GetCategoryList()
+        public async Task<List<ProductViewModel>> GetProductList()
         {
             return await _productServices.GetProduct();
         }

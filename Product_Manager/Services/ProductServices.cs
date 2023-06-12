@@ -61,43 +61,46 @@ namespace Product_Manager.Services
         {
             var category = await _context.Categories.FirstOrDefaultAsync(u => u.Id == productModel.CategoryId);
             ResponseModel model = new ResponseModel();
-            if (productModel.Id == 0 || productModel.Id == null)
-            {
-                var product = new Product();
-                product.CategoryId = category.Id;
-                product.CostPrice = productModel.CostPrice;
-                product.RetailPrice = productModel.RetailPrice;
-                product.ProductName = productModel.ProductName;
-                product.Status = productModel.Status;
-                product.ManufrecturerName = productModel.ManufrecturerName;
-                product.ExpiryDate = productModel.ExpiryDate;
-                product.ManufrecturingDate = productModel.ManufrecturingDate;
-                product.ImageUrl=productModel.ImageUrl;
-                product.Category = category;
-                product.ProductType = productModel.ProductType; 
-                _context.Add<Product>(product);
-                model.IsSuccess = true;
-                model.Message = "Category Inserted Successfully";
-            }
-            else
-            {
-                var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == productModel.Id); ;
-                product.CategoryId = category.Id;
-                product.CostPrice = productModel.CostPrice;
-                product.RetailPrice = productModel.RetailPrice;
-                product.ProductName = productModel.ProductName;
-                product.Status = productModel.Status;
-                product.ManufrecturerName = productModel.ManufrecturerName;
-                product.ExpiryDate = productModel.ExpiryDate;
-                product.ManufrecturingDate = productModel.ManufrecturingDate;
-                product.ImageUrl = productModel.ImageUrl;
-                product.Category = category;
-                product.ProductType = productModel.ProductType;
-                _context.Update(product);
-                model.IsSuccess = true;
-                model.Message = "Category Inserted Successfully";
+            
+                if (productModel.Id == 0 || productModel.Id == null)
+                {
+                    var product = new Product();
+                    product.CategoryId = category.Id;
+                    product.CostPrice = productModel.CostPrice;
+                    product.RetailPrice = productModel.RetailPrice;
+                    product.ProductName = productModel.ProductName;
+                    product.Status = productModel.Status;
+                    product.ManufrecturerName = productModel.ManufrecturerName;
+                    product.ExpiryDate = productModel.ExpiryDate;
+                    product.ManufrecturingDate = productModel.ManufrecturingDate;
+                    product.ImageUrl = productModel.ImageUrl;
+                    product.Category = category;
+                    product.ProductType = productModel.ProductType;
+                    _context.Add<Product>(product);
+                    model.IsSuccess = true;
+                    model.Message = "Category Inserted Successfully";
+                }
+                else
+                {
+                    var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == productModel.Id); ;
+                    product.CategoryId = category.Id;
+                    product.CostPrice = productModel.CostPrice;
+                    product.RetailPrice = productModel.RetailPrice;
+                    product.ProductName = productModel.ProductName;
+                    product.Status = productModel.Status;
+                    product.ManufrecturerName = productModel.ManufrecturerName;
+                    product.ExpiryDate = productModel.ExpiryDate;
+                    product.ManufrecturingDate = productModel.ManufrecturingDate;
+                    product.ImageUrl = productModel.ImageUrl;
+                    product.Category = category;
+                    product.ProductType = productModel.ProductType;
+                    _context.Update(product);
+                    model.IsSuccess = true;
+                    model.Message = "Category Inserted Successfully";
 
-            }
+                }
+            
+           
             await _context.SaveChangesAsync();
 
             return model;

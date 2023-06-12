@@ -173,3 +173,8 @@ D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.WebP
 D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
 D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\System.Web.WebPages.dll
 D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Json.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Physical.dll
+D:\Projects\Product_Manager_Api\Product_Manager\bin\Debug\net6.0\Microsoft.Extensions.FileSystemGlobbing.dll

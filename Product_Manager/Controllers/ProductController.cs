@@ -52,11 +52,11 @@ namespace Product_Manager.Controllers
             }
             return null;
         }
-        [HttpGet]
+        [HttpPost]
         [Route("api/product/getproduct")]
-        public async Task<List<ProductViewModel>> GetProductList()
-        {
-            return await _productServices.GetProduct();
+        public async Task<List<ProductViewModel>> GetProductList(tableFilter tableFilterVm)
+      {
+            return await _productServices.GetProduct(tableFilterVm);
         }
         [HttpGet]
         [Route("api/product/getProductById/{id}")]

@@ -13,35 +13,37 @@ namespace Product_Manager.Services
         {
             _context = context;
         }
-        public async Task<List<ProductViewModel>> GetProduct(tableFilter tableFilterVm)
-       {
+        public async Task<productWithPage> GetProduct(tableFilter tableFilterVm)
+        {
             List<ProductViewModel> products = new List<ProductViewModel>();
             List<ProductViewModel> productModel = new List<ProductViewModel>();
-            
-            var productsList =await (from product in _context.Products.Where(x => !x.DeletedAt.HasValue)
-                            from cat in _context.Categories.Where(x => x.Id == product.CategoryId && !x.DeletedAt.HasValue)
-                            select new ProductViewModel
-                            {
-                                Id = product.Id,
-                                ProductName = product.ProductName,
-                                CategoryId = product.CategoryId,
-                                CostPrice = product.CostPrice,
-                                RetailPrice = product.RetailPrice,
-                                ManufrecturerName = product.ManufrecturerName,
-                                ManufrecturingDate = product.ManufrecturingDate,
-                                ExpiryDate = product.ExpiryDate,
-                                Status = product.Status,
-                                Name = cat.Name,
-                                ProductType = product.ProductType,
-                            }).ToListAsync();
+
+            var productsList = await (from product in _context.Products.Where(x => !x.DeletedAt.HasValue)
+                                      from cat in _context.Categories.Where(x => x.Id == product.CategoryId && !x.DeletedAt.HasValue)
+                                      select new ProductViewModel
+                                      {
+                                          Id = product.Id,
+                                          ProductName = product.ProductName,
+                                          CategoryId = product.CategoryId,
+                                          CostPrice = product.CostPrice,
+                                          RetailPrice = product.RetailPrice,
+                                          ManufrecturerName = product.ManufrecturerName,
+                                          ManufrecturingDate = product.ManufrecturingDate,
+                                          ExpiryDate = product.ExpiryDate,
+                                          Status = product.Status,
+                                          Name = cat.Name,
+                                          ProductType = product.ProductType,
+                                      }).ToListAsync();
 
             if (tableFilterVm.searchValue == null || tableFilterVm.searchValue == "")
             {
                 productModel = productsList;
             }
-            else {
+            else
+            {
                 bool hasId = tableFilterVm.displayedHeaders.Contains("Id");
                 bool hasPN = tableFilterVm.displayedHeaders.Contains("Product Name");
+                bool hasCN = tableFilterVm.displayedHeaders.Contains("Category Name");
                 bool hasCP = tableFilterVm.displayedHeaders.Contains("Cost Price");
                 bool hasRP = tableFilterVm.displayedHeaders.Contains("Retail Price");
                 bool hasMN = tableFilterVm.displayedHeaders.Contains("Manufracturer Name");
@@ -59,16 +61,54 @@ namespace Product_Manager.Services
                                                     (hasMD && x.ManufrecturingDate.ToString().ToLower().Contains(searchValue)) ||
                                                     (hasED && x.ExpiryDate.HasValue && x.ExpiryDate.ToString().ToLower().Contains(searchValue)) ||
                                                     (hasStatus && x.Status.ToString().ToLower().Contains(searchValue)) ||
+                                                    (hasCN && x.Name.ToString().ToLower().Contains(searchValue)) ||
                                                     (hasPT && x.ProductType.ToLower().Contains(searchValue))).ToList();
-                    
-            }
-            
 
-            
+            }
+            if (tableFilterVm.sortingColumnName == null || tableFilterVm.sortingDirection == "" || tableFilterVm.sortingColumnName == "" || tableFilterVm.sortingDirection == null)
+            {
+                productModel = productModel;
+            }
+            else
+            {
+                switch (tableFilterVm.sortingColumnName)
+                {
+                    case "Id":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.Id).ToList() : productModel.OrderByDescending(x => x.Id).ToList();
+                        break;
+                    case "Product Name":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.ProductName).ToList() : productModel.OrderByDescending(x => x.ProductName).ToList();
+                        break;
+                    case "Manufracturer Name":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.ManufrecturerName).ToList() : productModel.OrderByDescending(x => x.ManufrecturerName).ToList();
+                        break;
+                    case "Product Type":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.ProductType).ToList() : productModel.OrderByDescending(x => x.ProductType).ToList();
+                        break;
+                    case "Cost Price":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.CostPrice).ToList() : productModel.OrderByDescending(x => x.CostPrice).ToList();
+                        break;
+                    case "Retail Price":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.RetailPrice).ToList() : productModel.OrderByDescending(x => x.RetailPrice).ToList();
+                        break;
+                    case "Manufrecturing Date":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.ManufrecturingDate).ToList() : productModel.OrderByDescending(x => x.ManufrecturingDate).ToList();
+                        break;
+                    case "Expiry Date":
+                        productModel = (tableFilterVm.sortingDirection == "asc") ? productModel.OrderBy(x => x.ExpiryDate).ToList() : productModel.OrderByDescending(x => x.ExpiryDate).ToList();
+                        break;
+
+                }
+            }
+
             int pageSize = tableFilterVm.PageSize;
             int skip = (tableFilterVm.PageIndex) * pageSize;
             products = productModel.Skip(skip).Take(pageSize).ToList();
-            return products;
+            productWithPage finalProduct = new productWithPage();
+            finalProduct.data = products;
+            finalProduct.totalPages = productModel.Count();
+
+            return finalProduct;
 
         }
         public async Task<ProductViewModel> GetProductById(int id)

@@ -54,7 +54,7 @@ namespace Product_Manager.Controllers
         }
         [HttpPost]
         [Route("api/product/getproduct")]
-        public async Task<List<ProductViewModel>> GetProductList(tableFilter tableFilterVm)
+        public async Task<productWithPage> GetProductList(tableFilter tableFilterVm)
       {
             return await _productServices.GetProduct(tableFilterVm);
         }

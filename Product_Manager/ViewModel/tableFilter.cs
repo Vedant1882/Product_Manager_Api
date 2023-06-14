@@ -7,6 +7,8 @@
 
         public string? searchValue { get; set; }
 
+        public string? sortingColumnName { get; set; }
+        public string? sortingDirection { get; set; }
         public List<string>? displayedHeaders { get; set; } 
     }
 }

@@ -6,6 +6,7 @@ namespace Product_Manager.Interfaces
     public interface ICategoryService
     {
         public Task<List<Category>> GetCategory();
+        public Task<CategoryWithPage> GetCategoryTable(tableFilter tableFilterVm);
         public Task<Category> GetCategoryById(int id);
 
         public Task<ResponseModel> SaveCategory(Category CategoryModel);

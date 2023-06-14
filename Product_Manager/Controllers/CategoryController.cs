@@ -31,6 +31,12 @@ namespace Product_Manager.Controllers
         {
             return await _categoryServices.GetCategory();
         }
+        [HttpPost]
+        [Route("api/category/getCategorytable")]
+        public async Task<CategoryWithPage> GetCategoryTable(tableFilter tableFilter)
+        {
+            return await _categoryServices.GetCategoryTable(tableFilter);
+        }
         [HttpGet]
         [Route("api/category/getCategoryById/{id}")]
         public async Task<Category> GetCategoryById(int id)

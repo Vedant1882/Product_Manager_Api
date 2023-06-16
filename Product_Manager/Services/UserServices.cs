@@ -15,10 +15,17 @@ namespace Product_Manager.Services
         {
             _context = context;
         }
-        public async Task<List<AppUsers>> GetUsers()
+        public async Task<UsersWithPage> GetUsers(tableFilter tableFilter)
         {
-
-            return await _context.AppUsers.Where(x=>!x.DeletedAt.HasValue).ToListAsync();
+            List<AppUsers> users = new List<AppUsers>();
+            var userLists=await _context.AppUsers.Where(x=>!x.DeletedAt.HasValue).ToListAsync();
+            int pageSize = tableFilter.PageSize;
+            int skip = (tableFilter.PageIndex) * pageSize;
+            users = userLists.Skip(skip).Take(pageSize).ToList();
+            UsersWithPage finalUsers = new UsersWithPage();
+            finalUsers.data = users;
+            finalUsers.totalPages = userLists.Count();
+            return finalUsers;
         }
         public async Task<AppUsers> GetUsersById(int id)
         {

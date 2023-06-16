@@ -37,12 +37,12 @@ namespace Product_Manager.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet]
+        [HttpPost]
         [Route("api/user/get")]
-        public async Task<List<AppUsers>> GetAppUsersList()
+        public async Task<UsersWithPage> GetAppUsersList(tableFilter tableFilter)
         {
             var header = HttpContext.Request.Headers;
-            return await _userServices.GetUsers();
+            return await _userServices.GetUsers(tableFilter);
         }
         [HttpGet]
         [Route("api/user/getbyid")]

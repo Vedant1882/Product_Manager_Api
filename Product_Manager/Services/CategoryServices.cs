@@ -59,7 +59,6 @@ namespace Product_Manager.Services
             int pageSize = tableFilterVm.PageSize;
             int skip = (tableFilterVm.PageIndex) * pageSize;
             categories = categoryModel.Skip(skip).Take(pageSize).ToList();
-            productWithPage finalProduct = new productWithPage();
             CategoryWithPage finalCategory = new CategoryWithPage();
             finalCategory.data = categories;
             finalCategory.totalPages = categoryModel.Count();

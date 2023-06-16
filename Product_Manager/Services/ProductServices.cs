@@ -33,6 +33,7 @@ namespace Product_Manager.Services
                                           Status = product.Status,
                                           Name = cat.Name,
                                           ProductType = product.ProductType,
+                                          ImageUrl = product.ImageUrl,
                                       }).ToListAsync();
 
             if (tableFilterVm.searchValue == null || tableFilterVm.searchValue == "")

@@ -18,13 +18,27 @@ namespace Product_Manager.Services
         public async Task<UsersWithPage> GetUsers(tableFilter tableFilter)
         {
             List<AppUsers> users = new List<AppUsers>();
+            List<AppUsers> usersModel = new List<AppUsers>();
             var userLists=await _context.AppUsers.Where(x=>!x.DeletedAt.HasValue).ToListAsync();
+            if (tableFilter.searchValue == null || tableFilter.searchValue == "")
+            {
+                usersModel = userLists;
+            }
+            else
+            {
+                string searchValue = tableFilter.searchValue.ToString().ToLower();
+                usersModel = userLists.Where(x =>
+                                                    ( x.Id.ToString().ToLower().Contains(searchValue)) ||
+                                                    (x.FirstName.ToString().ToLower().Contains(searchValue)) ||
+                                                    (x.LastName.ToLower().Contains(searchValue)) ||
+                                                    (x.Email.ToLower().Contains(searchValue))).ToList();
+            }
             int pageSize = tableFilter.PageSize;
             int skip = (tableFilter.PageIndex) * pageSize;
-            users = userLists.Skip(skip).Take(pageSize).ToList();
+            users = usersModel.Skip(skip).Take(pageSize).ToList();
             UsersWithPage finalUsers = new UsersWithPage();
             finalUsers.data = users;
-            finalUsers.totalPages = userLists.Count();
+            finalUsers.totalPages = usersModel.Count();
             return finalUsers;
         }
         public async Task<AppUsers> GetUsersById(int id)

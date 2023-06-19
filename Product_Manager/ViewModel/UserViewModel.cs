@@ -29,7 +29,7 @@ namespace Product_Manager.ViewModel
             get;
             set;
         }
-        public string Password
+        public string? Password
         {
             get;
             set;

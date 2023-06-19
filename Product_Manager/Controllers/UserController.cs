@@ -45,11 +45,19 @@ namespace Product_Manager.Controllers
             return await _userServices.GetUsers(tableFilter);
         }
         [HttpGet]
-        [Route("api/user/getbyid")]
+        [Route("api/user/getbyid/{id}")]
         public async Task<AppUsers> GetUserById(int id)
         {
             return await _userServices.GetUsersById(id);
         }
+
+        [HttpGet]
+        [Route("api/user/deleteuser/{id}")]
+        public async Task<ResponseModel> DeleteCategory(int id)
+        {
+            return await _userServices.DeleteUser(id);
+        }
+
         [HttpPost]
         [Route("api/user/login")]
 

@@ -35,7 +35,7 @@ namespace Product_Manager.ViewModel
             set;
         }
        
-        public int? PhoneNumber
+        public long? PhoneNumber
         {
             get;
             set;
